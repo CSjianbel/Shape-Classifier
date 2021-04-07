@@ -41,41 +41,6 @@ def vector_difference(p1, p2):
     return pythagorean(vector_subtraction(p1, p2))
 
 
-def clear_data_dir(directory):
-    """
-    Removes all contents of directory
-    @param: directory(path): str
-    @return: None
-    """
-    # Remove contents of data_directory and directory itself
-    shutil.rmtree(directory)
-    # Recreate the directory
-    os.mkdir(directory)
-
-
-def random_color(max=230):
-    """
-    Returns a randomly generated tuple of RGB values
-    @param: max: int
-    @return: tuple: (R, G, B)
-    """
-    return (
-        random.randint(0, max),
-        random.randint(0, max),
-        random.randint(0, max)
-    )
-
-
-def setup_data_dir(data_dir, directories):
-    """
-    Setups the DATA_DIR by creating the directories for each shape
-    @param: str(path), list: [str]
-    @return: None
-    """
-    for directory in directories:
-        os.mkdir(os.path.join(data_dir, directory))
-
-
 def verify_vertices(v1, v2, v3):
     """
     Verifies if the vertices are all distinct from each other 
@@ -89,4 +54,39 @@ def verify_vertices(v1, v2, v3):
         and vector_difference(v1, v2) > 10.0
         and vector_difference(v2, v3) > 10.0
         and vector_difference(v1, v3) > .0
+    )
+
+
+def clear_data_dir(directory):
+    """
+    Removes all contents of directory
+    @param: directory(path): str
+    @return: None
+    """
+    # Remove contents of data_directory and directory itself
+    shutil.rmtree(directory)
+    # Recreate the directory
+    os.mkdir(directory)
+
+
+def setup_data_dir(data_dir, directories):
+    """
+    Setups the DATA_DIR by creating the directories for each shape
+    @param: str(path), list: [str]
+    @return: None
+    """
+    for directory in directories:
+        os.mkdir(os.path.join(data_dir, directory))
+
+
+def random_color(max=230):
+    """
+    Returns a randomly generated tuple of RGB values
+    @param: max: int
+    @return: tuple: (R, G, B)
+    """
+    return (
+        random.randint(0, max),
+        random.randint(0, max),
+        random.randint(0, max)
     )

@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw
 # Utils
 from utils import verify_vertices, clear_data_dir, setup_data_dir, random_color
 
+""" CONSTANTS """
 # Image dimension - 32x32
 WIDTH, HEIGHT = 32, 32
 # Data Directory
