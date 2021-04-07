@@ -6,12 +6,14 @@ Saves the images in a DATA_DIR
 # Standard Libraries
 import os
 import sys
-import shutil
 import random
 from random import randint
 
+# 3rd Party Modules
 from PIL import Image, ImageDraw
 
+# Utils
+from utils import verify_vertices, clear_data_dir, setup_data_dir, random_color
 
 # Image dimension - 32x32
 WIDTH, HEIGHT = 32, 32
@@ -19,7 +21,7 @@ WIDTH, HEIGHT = 32, 32
 DATA_DIR = "Data"
 
 # Colors
-WHITE = (255,255,255)
+WHITE = (255, 255, 255)
 
 
 def main():
@@ -27,7 +29,7 @@ def main():
     # Remove all files in Data Directory
     clear_data_dir(DATA_DIR)
     # Create Subdirectories in DATA_DIR
-    setup_data_dir([
+    setup_data_dir(DATA_DIR, [
         "Circle",
         "Triangle",
         "Square",
@@ -43,7 +45,7 @@ def main():
 
     # Generate the Images
     try:
-       generate(N)
+        generate(N)
     except NameError:
         generate()
 
@@ -83,7 +85,7 @@ def generate_circle(n):
     for i in range(n):
 
         # Generate a random radius
-        r = randint(0, WIDTH - 1)
+        r = randint(5, WIDTH - 1)
         # Coordinates of the top-left corner of the bounding box
         x, y = randint(0, WIDTH - r - 1), randint(0, HEIGHT - r - 1)
 
@@ -119,7 +121,7 @@ def generate_triangle(n):
             v1 = (randint(0, WIDTH - 1), randint(0, HEIGHT - 1))
             v2 = (randint(0, WIDTH - 1), randint(0, HEIGHT - 1))
             v3 = (randint(0, WIDTH - 1), randint(0, HEIGHT - 1))
-            if len(set((v1, v2, v3))) == 3:
+            if verify_vertices(v1, v2, v3):
                 break
 
         # Create a new Image
@@ -149,7 +151,7 @@ def generate_square(n):
 
     for i in range(n):
         # Generate a random side length
-        side = randint(0, WIDTH - 1)
+        side = randint(5, WIDTH - 1)
         # Coordinates of the top-left corner of the square
         x, y = randint(0, WIDTH - side - 1), randint(0, HEIGHT - side - 1)
 
@@ -181,10 +183,9 @@ def generate_rectangle(n):
     for i in range(n):
         # Generate 2 random sides that must not be equal to each other
         while True:
-            s1, s2 = randint(0, WIDTH - 1), randint(0, HEIGHT - 1)
-            # if both numbers are unique 
-            # and their absolute difference is at least 5; break the loop
-            if s1 != s2 and abs(s1 - s2) > 4:
+            s1, s2 = randint(5, WIDTH - 1), randint(5, HEIGHT - 1)
+            # if both numbers are unique; break out of the loop 
+            if s1 != s2: 
                 break
 
         # Coordinates of top-left corner of the square
@@ -202,41 +203,6 @@ def generate_rectangle(n):
         # Save the image having 'i' as its filename formatted to n's number of digits
         image.save(image_path)
         print(f"Saved image to {image_path}...")
-    
-
-def clear_data_dir(directory):
-    """
-    Removes all contents of directory
-    @param: directory(path): str
-    @return: None
-    """
-    # Remove contents of data_directory and directory itself
-    shutil.rmtree(directory)
-    # Recreate the directory
-    os.mkdir(directory)
-
-
-def random_color(max=230):
-    """
-    Returns a randomly generated tuple of RGB values
-    @param: max: int
-    @return: tuple: (R, G, B)
-    """
-    return (
-        randint(0,max),
-        randint(0,max),
-        randint(0,max)
-    )
-
-
-def setup_data_dir(directories):
-    """
-    Setups the DATA_DIR by creating the directories for each shape
-    @param: list: [str]
-    @return: None
-    """
-    for directory in directories:
-        os.mkdir(os.path.join(DATA_DIR, directory))
 
 
 if __name__ == "__main__":
