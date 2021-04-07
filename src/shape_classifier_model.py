@@ -3,6 +3,7 @@ Creates a shape classifier model
 """
 # Standard libraries
 import os
+import sys
 
 # 3rd party libraries
 import tensorflow as tf
@@ -25,9 +26,26 @@ WIDTH, HEIGHT = 32, 32
 
 
 def main():
-    """
-    """
-    pass
+
+    # Load the images 
+    images, labels = load_data(DATA_DIR)
+
+    # Split the training data into traingin and testing sets
+    labels = tf.keras.util.to_categorical(labels)
+    x_train, y_train, x_test, y_test = train_test_split(
+        np.array(images), np.array(labels), test_size=TEST_SIZE
+    )
+
+    # Get a compiled convolutional neural network
+    model = get_model()
+
+    # Fit model on training data
+    model.fit(x_train, y_train, epochs=EPOCHS)
+
+    # Evaluate convolutional neural network accuracy/performance
+    model.evaluate(x_test, y_test, verbose=2)
+
+    # Save model
 
 
 def load_data(data_dir):
