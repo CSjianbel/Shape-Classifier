@@ -44,7 +44,7 @@ python shape_classifier_model.py [model.h5]
 
 ## Use the CNN model
 
-Default model will be in ~Models/shape_classifier_model.h5~.
+Default model will be in _Models/shape_classifier_model.h5_.
 
 ```bash
 python shape_classifier.py

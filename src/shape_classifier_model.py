@@ -4,13 +4,23 @@ Creates a shape classifier model
 # Standard libraries
 import os
 import sys
+import argsparse
 
 # 3rd party libraries
-import tensorflow as tf
-import numpy as np
-import cv2 
+try:
+    import tensorflow as tf
+    import numpy as np
+    import cv2 
 
-from sklearn.model_selection import train_test_split
+    from sklearn.model_selection import train_test_split
+except ModuleNotFoundError:
+    print("Required Modules Not Installed...")
+    print("(Run): pip install -r requirements.txt")
+    sys.exit(1)
+
+# Utiiities
+from utils import err_exit
+
 
 """ CONSTANTS """
 # Data Directory
@@ -26,6 +36,20 @@ WIDTH, HEIGHT = 32, 32
 
 
 def main():
+
+    #Parse Command Line Arguments
+    parser = argsparse.ArgumentParser()
+    parser.add_argument("-d", "--dataDir", help="Path to specified Data Directory", default=None, type=str)
+    parser.add_argument("-s", "--saveModel", help="Save trained model to a file", default=None, type=str)
+    args = parser.parser_args()
+
+    # If user specified a data directory
+    if args.dataDir:
+        # Check if it is a invalid directory
+        if not os.path.isdir(args.dataDir) or len(os.listdir(args.dataDir)) != NUM_SHAPE_TYPES:
+            err_exit("Invalid Data Directory provided...", 2)
+        else: 
+            DATA_DIR = args.dataDir if args.dataDir else DATA_DIR
 
     # Load the images 
     images, labels = load_data(DATA_DIR)
@@ -46,6 +70,9 @@ def main():
     model.evaluate(x_test, y_test, verbose=2)
 
     # Save model
+    if args.saveModel:
+        model.save(args.saveModel)
+        print(f"Model saved on {args.saveModel}...")
 
 
 def load_data(data_dir):

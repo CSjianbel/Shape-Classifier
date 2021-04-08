@@ -1,5 +1,6 @@
 # Standard Libraries
 import os
+import sys
 import shutil
 import math
 import random
@@ -90,3 +91,13 @@ def random_color(max=230):
         random.randint(0, max),
         random.randint(0, max)
     )
+
+
+def err_exit(msg="", code=404):
+    """
+    Prints an error message and exits the program
+    @param: msg: str, code: int
+    @return: None
+    """
+    print(msg)
+    sys.exit(code)

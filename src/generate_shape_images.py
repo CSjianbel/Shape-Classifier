@@ -10,10 +10,15 @@ import random
 from random import randint
 
 # 3rd Party Modules
-from PIL import Image, ImageDraw
+try: 
+    from PIL import Image, ImageDraw
+except ModuleNotFoundError:
+    print("Required Modules Not Installed...")
+    print("(Run): pip install -r requirements.txt")
+    sys.exit(1)
 
 # Utils
-from utils import verify_vertices, clear_data_dir, setup_data_dir, random_color
+from utils import verify_vertices, clear_data_dir, setup_data_dir, random_color, err_exit
 
 """ CONSTANTS """
 # Image dimension - 32x32
@@ -41,8 +46,7 @@ def main():
         try:
             N = int(sys.argv[1])
         except ValueError:
-            print("Usage: python generate_shape_images.py [int]")
-            sys.exit(1)
+            err_exit("Usage: python generate_shape_images.py [int]", 2)
 
     # Generate the Images
     try:
