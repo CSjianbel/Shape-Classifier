@@ -186,11 +186,11 @@ def generate_rectangle(n):
     padding = len(str(n))
 
     for i in range(n):
-        # Generate 2 random sides that must not be equal to each other
+        # Generate 2 random sides 
         while True:
             s1, s2 = randint(5, WIDTH - 1), randint(5, HEIGHT - 1)
-            # if both numbers are unique; break out of the loop 
-            if s1 != s2: 
+            # sides must have a difference greater than 10 pixels
+            if abs(s1 - s2) > 10:
                 break
 
         # Coordinates of top-left corner of the square

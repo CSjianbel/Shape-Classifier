@@ -54,7 +54,7 @@ def verify_vertices(v1, v2, v3):
         len(set((v1, v2, v3))) == 3 
         and vector_difference(v1, v2) > 10.0
         and vector_difference(v2, v3) > 10.0
-        and vector_difference(v1, v3) > .0
+        and vector_difference(v1, v3) > 10.0
     )
 
 
