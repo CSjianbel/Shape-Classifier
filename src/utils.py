@@ -65,7 +65,8 @@ def clear_data_dir(directory):
     @return: None
     """
     # Remove contents of data_directory and directory itself
-    shutil.rmtree(directory)
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
     # Recreate the directory
     os.mkdir(directory)
 

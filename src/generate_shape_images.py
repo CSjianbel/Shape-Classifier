@@ -57,7 +57,7 @@ def main():
     print("Dataset Complete! :)")
 
 
-def generate(N=1000):
+def generate(N=10000):
     """
     Generates the images of shapes
     Dataset will be used to train a neural network model 
